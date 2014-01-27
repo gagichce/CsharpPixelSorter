@@ -34,7 +34,11 @@
             this.buttonPreview = new System.Windows.Forms.Button();
             this.saveFileDialogPreview = new System.Windows.Forms.SaveFileDialog();
             this.buttonPreviewSave = new System.Windows.Forms.Button();
+            this.toleranceUpDown = new System.Windows.Forms.NumericUpDown();
+            this.toleranceLbl = new System.Windows.Forms.Label();
+            this.dynamicUpdatingCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.toleranceUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBoxPreview
@@ -85,20 +89,64 @@
             this.buttonPreviewSave.UseVisualStyleBackColor = true;
             this.buttonPreviewSave.Click += new System.EventHandler(this.buttonPreviewSave_Click);
             // 
+            // toleranceUpDown
+            // 
+            this.toleranceUpDown.Location = new System.Drawing.Point(870, 138);
+            this.toleranceUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.toleranceUpDown.Name = "toleranceUpDown";
+            this.toleranceUpDown.Size = new System.Drawing.Size(46, 20);
+            this.toleranceUpDown.TabIndex = 4;
+            this.toleranceUpDown.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.toleranceUpDown.Click += new System.EventHandler(this.toleranceUpDown_Click);
+            // 
+            // toleranceLbl
+            // 
+            this.toleranceLbl.AutoSize = true;
+            this.toleranceLbl.Location = new System.Drawing.Point(846, 122);
+            this.toleranceLbl.Name = "toleranceLbl";
+            this.toleranceLbl.Size = new System.Drawing.Size(94, 13);
+            this.toleranceLbl.TabIndex = 5;
+            this.toleranceLbl.Text = "Tolerance: (1-100)";
+            // 
+            // dynamicUpdatingCheckBox
+            // 
+            this.dynamicUpdatingCheckBox.AutoSize = true;
+            this.dynamicUpdatingCheckBox.Checked = true;
+            this.dynamicUpdatingCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.dynamicUpdatingCheckBox.Location = new System.Drawing.Point(861, 164);
+            this.dynamicUpdatingCheckBox.Name = "dynamicUpdatingCheckBox";
+            this.dynamicUpdatingCheckBox.Size = new System.Drawing.Size(67, 17);
+            this.dynamicUpdatingCheckBox.TabIndex = 6;
+            this.dynamicUpdatingCheckBox.Text = "Dynamic";
+            this.dynamicUpdatingCheckBox.UseVisualStyleBackColor = true;
+            // 
             // mainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(962, 551);
+            this.Controls.Add(this.dynamicUpdatingCheckBox);
+            this.Controls.Add(this.toleranceLbl);
+            this.Controls.Add(this.toleranceUpDown);
             this.Controls.Add(this.buttonPreviewSave);
             this.Controls.Add(this.buttonPreview);
             this.Controls.Add(this.buttonBrowse);
             this.Controls.Add(this.pictureBoxPreview);
             this.Name = "mainPage";
-            this.Text = "Pixel Sorter - NVC Software";
+            this.Text = "Pixel Sorter";
             this.Load += new System.EventHandler(this.mainPage_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.toleranceUpDown)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -110,6 +158,9 @@
         private System.Windows.Forms.Button buttonPreview;
         private System.Windows.Forms.SaveFileDialog saveFileDialogPreview;
         private System.Windows.Forms.Button buttonPreviewSave;
+        private System.Windows.Forms.NumericUpDown toleranceUpDown;
+        private System.Windows.Forms.Label toleranceLbl;
+        private System.Windows.Forms.CheckBox dynamicUpdatingCheckBox;
     }
 }
 

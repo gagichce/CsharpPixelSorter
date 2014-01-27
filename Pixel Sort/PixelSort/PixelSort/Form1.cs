@@ -12,6 +12,7 @@ namespace PixelSort
 {
     public partial class mainPage : Form
     {
+        private string imagePath = "";
         public mainPage()
         {
             InitializeComponent();
@@ -36,9 +37,12 @@ namespace PixelSort
 
         private void buttonPreview_Click(object sender, EventArgs e)
         {
-            Sort thisSort = new Sort(pictureBoxPreview.Image);
-            //0.27 is a good tolerance
-            pictureBoxPreview.Image = thisSort.SortImage(0.17f);
+            updateImage();
+        }
+
+        private void updateImage() {
+            Sort thisSort = new Sort(Image.FromFile(openFileDialogPreview.FileName));
+            pictureBoxPreview.Image = thisSort.SortImage((float)toleranceUpDown.Value / 100f);
         }
 
         private void saveFileDialogPreview_FileOk(object sender, CancelEventArgs e)
@@ -49,6 +53,14 @@ namespace PixelSort
         private void buttonPreviewSave_Click(object sender, EventArgs e)
         {
             saveFileDialogPreview.ShowDialog();
+        }
+
+        private void toleranceUpDown_Click(object sender, EventArgs e)
+        {
+            if (dynamicUpdatingCheckBox.Checked && pictureBoxPreview.Image != null)
+            {
+                updateImage();
+            }
         }
     }
 }
