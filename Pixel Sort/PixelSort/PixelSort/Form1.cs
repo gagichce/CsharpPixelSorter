@@ -62,7 +62,7 @@ namespace PixelSort
                     pictureBoxPreview.Image = thisSort.SortImage2((float)toleranceUpDown.Value / 100f);
                     break;
                 case RadioButtonStatus.Block:
-                    pictureBoxPreview.Image = thisSort.SortImageBlock((float)toleranceUpDown.Value / 100f);
+                    pictureBoxPreview.Image = thisSort.SortImageBlockSwap(35);
                     break;
             }
         }

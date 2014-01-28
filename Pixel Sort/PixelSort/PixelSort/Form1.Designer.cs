@@ -170,9 +170,9 @@
             this.radioButtonBlock.AutoSize = true;
             this.radioButtonBlock.Location = new System.Drawing.Point(855, 247);
             this.radioButtonBlock.Name = "radioButtonBlock";
-            this.radioButtonBlock.Size = new System.Drawing.Size(52, 17);
+            this.radioButtonBlock.Size = new System.Drawing.Size(82, 17);
             this.radioButtonBlock.TabIndex = 10;
-            this.radioButtonBlock.Text = "Block";
+            this.radioButtonBlock.Text = "Block Swap";
             this.radioButtonBlock.UseVisualStyleBackColor = true;
             this.radioButtonBlock.CheckedChanged += new System.EventHandler(this.radioButtonBlock_CheckedChanged);
             // 

@@ -75,26 +75,31 @@ namespace PixelSort
             return (Image)tempBitmap;
         }
 
-        public Image SortImageBlock(float tolerance)
+        public Image SortImageBlockSwap(int blockSize)
         {
-            for (int x = 0; x < Math.Floor(tempBitmap.Width / 9d) + 1; x++)
+            Random randy = new Random();
+            for (int x = 0; x < Math.Floor(tempBitmap.Width / (decimal)blockSize) + 1; x++)
             {
-                for (int y = 0; y < Math.Floor(tempBitmap.Height / 9d) + 1; y++)
+                for (int y = 0; y < Math.Floor(tempBitmap.Height / (decimal)blockSize) + 1; y++)
                 {
-                    List<Color> toAverage = new List<Color>();
-                    for (int xi = 0; xi < 9 && tempBitmap.Width - (x * 9) - xi > 1; xi++)
+                    if (randy.Next(0, 6) == 0)
                     {
-                        for (int yi = 0; yi < 9 && tempBitmap.Height - (y * 9) - yi > 1; yi++)
+                        int SwapX = randy.Next(0, 2);
+                        int SwapY = randy.Next(0, 2);
+                        while ((SwapX | SwapY) == 0 && withinRange((x + SwapX) * blockSize, 0, tempBitmap.Width + blockSize) && withinRange((y + SwapY) * blockSize, 0, tempBitmap.Height + blockSize))
                         {
-                            toAverage.Add(tempBitmap.GetPixel(x*9 + xi, y*9 + yi));
+
+                            SwapX = randy.Next(0, 2);
+                            SwapY = randy.Next(0, 2);
                         }
-                    }
-                    Color toChangeto = AverageColour(toAverage);
-                    for (int xi = 0; xi < 9 && tempBitmap.Width - (x * 9) - xi > 1; xi++)
-                    {
-                        for (int yi = 0; yi < 9 && tempBitmap.Height - (y * 9) - yi > 1; yi++)
+                        for (int xi = 0; xi < blockSize && tempBitmap.Width - ((x + SwapX) * blockSize) - xi > 1; xi++)
                         {
-                            tempBitmap.SetPixel(x * 9 + xi, y * 9 + yi, toChangeto);
+                            for (int yi = 0; yi < blockSize && tempBitmap.Height - ((y + SwapY) * blockSize) - yi > 1; yi++)
+                            {
+                                Color tempColour = tempBitmap.GetPixel((x + SwapX) * blockSize + xi, (y + SwapY) * blockSize + yi);
+                                tempBitmap.SetPixel((x + SwapX) * blockSize + xi, (y + SwapY) * blockSize + yi, tempBitmap.GetPixel(x * blockSize + xi, y * blockSize + yi));
+                                //tempBitmap.SetPixel(x * blockSize + xi, y * blockSize + yi, tempColour);
+                            }
                         }
                     }
                 }
@@ -121,12 +126,21 @@ namespace PixelSort
         private bool ComparePixel(Color pixel1, Color pixel2, float tolerance)
         {
             //alpha channel gets a multiplier because it is special and less 'visual'
-            if (withinRange(pixel1.A, pixel2.A, tolerance * 1.4f) && withinRange(pixel1.B, pixel2.B, tolerance) && withinRange(pixel1.G, pixel2.G, tolerance) && withinRange(pixel1.R, pixel2.R, tolerance))
+            if (withinTolerance(pixel1.A, pixel2.A, tolerance * 1.4f) && withinTolerance(pixel1.B, pixel2.B, tolerance) && withinTolerance(pixel1.G, pixel2.G, tolerance) && withinTolerance(pixel1.R, pixel2.R, tolerance))
                 return true;
             return false;
         }
 
-        private bool withinRange(int first, int second, float tolerance)
+        private bool withinRange(int num, int low, int high)
+        {
+            return num >= low && num <= high;
+        }
+
+        private bool withinExclusiveRange(int num, int low, int high)
+        {
+            return num > low && num < high;
+        }
+        private bool withinTolerance(int first, int second, float tolerance)
         {
             return ((float)Math.Abs(first - second)) / 256 < tolerance;
         }
