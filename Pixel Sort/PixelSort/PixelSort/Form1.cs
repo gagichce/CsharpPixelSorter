@@ -18,6 +18,16 @@ namespace PixelSort
             InitializeComponent();
         }
 
+        RadioButtonStatus mySortMethod = new RadioButtonStatus();
+
+        private enum RadioButtonStatus
+        {
+            none = 0,
+            Average1,
+            Average2,
+            Block
+        }
+
         private void buttonBrowse_Click(object sender, EventArgs e)
         {
             openFileDialogPreview.ShowDialog();
@@ -27,7 +37,7 @@ namespace PixelSort
         {
             openFileDialogPreview.InitialDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyPictures);
             saveFileDialogPreview.InitialDirectory = System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-            
+
         }
 
         private void openFileDialogPreview_FileOk(object sender, CancelEventArgs e)
@@ -40,14 +50,26 @@ namespace PixelSort
             updateImage();
         }
 
-        private void updateImage() {
+        private void updateImage()
+        {
             Sort thisSort = new Sort(Image.FromFile(openFileDialogPreview.FileName));
-            pictureBoxPreview.Image = thisSort.SortImage((float)toleranceUpDown.Value / 100f);
+            switch (mySortMethod)
+            {
+                case RadioButtonStatus.Average1:
+                    pictureBoxPreview.Image = thisSort.SortImage((float)toleranceUpDown.Value / 100f);
+                    break;
+                case RadioButtonStatus.Average2:
+                    pictureBoxPreview.Image = thisSort.SortImage2((float)toleranceUpDown.Value / 100f);
+                    break;
+                case RadioButtonStatus.Block:
+
+                    break;
+            }
         }
 
         private void saveFileDialogPreview_FileOk(object sender, CancelEventArgs e)
         {
-            pictureBoxPreview.Image.Save(saveFileDialogPreview.FileName,System.Drawing.Imaging.ImageFormat.Png);
+            pictureBoxPreview.Image.Save(saveFileDialogPreview.FileName, System.Drawing.Imaging.ImageFormat.Png);
         }
 
         private void buttonPreviewSave_Click(object sender, EventArgs e)
@@ -61,6 +83,21 @@ namespace PixelSort
             {
                 updateImage();
             }
+        }
+
+        private void radioButtonAverage1_CheckedChanged(object sender, EventArgs e)
+        {
+            mySortMethod = RadioButtonStatus.Average1;
+        }
+
+        private void radioButtonAverage2_CheckedChanged(object sender, EventArgs e)
+        {
+            mySortMethod = RadioButtonStatus.Average2;
+        }
+
+        private void radioButtonBlock_CheckedChanged(object sender, EventArgs e)
+        {
+            mySortMethod = RadioButtonStatus.Block;
         }
     }
 }
