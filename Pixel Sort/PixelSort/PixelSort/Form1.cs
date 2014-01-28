@@ -22,7 +22,7 @@ namespace PixelSort
 
         private enum RadioButtonStatus
         {
-            none = 0,
+            none,
             Average1,
             Average2,
             Block
@@ -62,7 +62,7 @@ namespace PixelSort
                     pictureBoxPreview.Image = thisSort.SortImage2((float)toleranceUpDown.Value / 100f);
                     break;
                 case RadioButtonStatus.Block:
-
+                    pictureBoxPreview.Image = thisSort.SortImageBlock((float)toleranceUpDown.Value / 100f);
                     break;
             }
         }

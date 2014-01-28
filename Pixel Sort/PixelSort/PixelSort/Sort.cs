@@ -74,6 +74,34 @@ namespace PixelSort
 
             return (Image)tempBitmap;
         }
+
+        public Image SortImageBlock(float tolerance)
+        {
+            for (int x = 0; x < Math.Floor(tempBitmap.Width / 9d) + 1; x++)
+            {
+                for (int y = 0; y < Math.Floor(tempBitmap.Height / 9d) + 1; y++)
+                {
+                    List<Color> toAverage = new List<Color>();
+                    for (int xi = 0; xi < 9 && tempBitmap.Width - (x * 9) - xi > 1; xi++)
+                    {
+                        for (int yi = 0; yi < 9 && tempBitmap.Height - (y * 9) - yi > 1; yi++)
+                        {
+                            toAverage.Add(tempBitmap.GetPixel(x*9 + xi, y*9 + yi));
+                        }
+                    }
+                    Color toChangeto = AverageColour(toAverage);
+                    for (int xi = 0; xi < 9 && tempBitmap.Width - (x * 9) - xi > 1; xi++)
+                    {
+                        for (int yi = 0; yi < 9 && tempBitmap.Height - (y * 9) - yi > 1; yi++)
+                        {
+                            tempBitmap.SetPixel(x * 9 + xi, y * 9 + yi, toChangeto);
+                        }
+                    }
+                }
+            }
+            return (Image)tempBitmap;
+        }
+
         private Color AverageColour(List<Color> inputColors)
         {
             int red = 0;
@@ -92,10 +120,7 @@ namespace PixelSort
         }
         private bool ComparePixel(Color pixel1, Color pixel2, float tolerance)
         {
-            //if ((new Random()).Next(0, 4) == 0)
-            //{
-            //    return false;
-            //}
+            //alpha channel gets a multiplier because it is special and less 'visual'
             if (withinRange(pixel1.A, pixel2.A, tolerance * 1.4f) && withinRange(pixel1.B, pixel2.B, tolerance) && withinRange(pixel1.G, pixel2.G, tolerance) && withinRange(pixel1.R, pixel2.R, tolerance))
                 return true;
             return false;
