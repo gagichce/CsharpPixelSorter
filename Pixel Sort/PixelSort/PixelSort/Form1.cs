@@ -62,9 +62,14 @@ namespace PixelSort
                     pictureBoxPreview.Image = thisSort.SortImage2((float)toleranceUpDown.Value / 100f);
                     break;
                 case RadioButtonStatus.Block:
-                    pictureBoxPreview.Image = thisSort.SortImageBlockSwap(35);
+                    pictureBoxPreview.Image = thisSort.SortImageBlockSwap(pixelsAcross(thisSort.originalImage)/42);
                     break;
             }
+        }
+
+        private int pixelsAcross(Image myImage)
+        {
+            return (int)Math.Sqrt(myImage.Height * myImage.Height + myImage.Width * myImage.Width);
         }
 
         private void saveFileDialogPreview_FileOk(object sender, CancelEventArgs e)

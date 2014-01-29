@@ -10,7 +10,7 @@ namespace PixelSort
     class Sort
     {
         Bitmap tempBitmap;
-        Image originalImage;
+        public Image originalImage;
         public Sort(Image thisImage)
         {
             tempBitmap = new Bitmap(thisImage);
@@ -82,7 +82,7 @@ namespace PixelSort
             {
                 for (int y = 0; y < Math.Floor(tempBitmap.Height / (decimal)blockSize) + 1; y++)
                 {
-                    if (randy.Next(0, 6) == 0)
+                    if (randy.Next(0, 5) == 0)
                     {
                         int SwapX = randy.Next(0, 2);
                         int SwapY = randy.Next(0, 2);
